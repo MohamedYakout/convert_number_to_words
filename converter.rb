@@ -49,9 +49,17 @@ class Converter
             else
                 "#{NUMBER_WORD_HASH[hundreds]} hundred"
             end
+        elsif number < 100000
+            thousands = (number / 1000).floor
+            mod = number % 1000
+            if mod > 0
+                "#{convert_number_to_words(thousands)} thousand and #{convert_number_to_words(mod)}"
+            else
+                "#{convert_number_to_words(thousands)} thousand"
+            end
         end
     end
 end
 
 converter = Converter.new
-puts converter.convert_number_to_words(251)
+puts converter.convert_number_to_words(1110)
