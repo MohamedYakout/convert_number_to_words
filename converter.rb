@@ -39,7 +39,8 @@ class Converter
         "thousand" => 1000, 
         "hundred_thousand" => 100000, 
         "million" => 1000000, 
-        "billion" => 1000000000
+        "billion" => 1000000000, 
+        "trillion" => 1000000000000
     }
 
     def convert_number_to_words(number)
@@ -81,7 +82,7 @@ class Converter
             else
                 "#{convert_number_to_words(millions)} million"
             end
-        else
+        elsif number < BIG_NUMBERS["trillion"]
             billions = (number / BIG_NUMBERS["billion"]).floor
             mod = number % BIG_NUMBERS["billion"]
             if mod > 0
@@ -89,9 +90,11 @@ class Converter
             else
                 "#{convert_number_to_words(billions)} billion"
             end 
+        else
+            "The max number is one trillion"
         end
     end
 end
 
-converter = Converter.new
-puts converter.convert_number_to_words(911251500000)
+# converter = Converter.new
+# puts converter.convert_number_to_words(911251500000)
