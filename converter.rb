@@ -81,9 +81,17 @@ class Converter
             else
                 "#{convert_number_to_words(millions)} million"
             end
+        else
+            billions = (number / BIG_NUMBERS["billion"]).floor
+            mod = number % BIG_NUMBERS["billion"]
+            if mod > 0
+                "#{convert_number_to_words(billions)} billion and #{convert_number_to_words(mod)}"
+            else
+                "#{convert_number_to_words(billions)} billion"
+            end 
         end
     end
 end
 
 converter = Converter.new
-puts converter.convert_number_to_words(900000000)
+puts converter.convert_number_to_words(911251500000)
