@@ -50,7 +50,7 @@ class Converter
             ones = number % 10
             tens = (number / 10).floor
             "#{NUMBER_WORD_HASH[tens * 10]} #{NUMBER_WORD_HASH[ones]}"
-        elsif number < 1000
+        elsif number < BIG_NUMBERS["thousand"]
             hundreds = (number / 100).floor
             mod = number % 100
             if mod > 0
@@ -58,7 +58,7 @@ class Converter
             else
                 "#{NUMBER_WORD_HASH[hundreds]} hundred"
             end
-        elsif number < BIG_NUMBERS["thousand"]
+        elsif number < BIG_NUMBERS["hundred_thousand"]
             thousands = (number / 1000).floor
             mod = number % 1000
             if mod > 0
@@ -93,6 +93,11 @@ class Converter
         else
             "The max number is one trillion"
         end
+
+        if ["hundred", "thousand", "million", "billion", "trillion"].include? words
+            words = "one #{words}"
+        end
+        words
     end
 end
 
