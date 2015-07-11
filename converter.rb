@@ -34,10 +34,18 @@ class Converter
         1000000000=>"billion"
     }
 
+    BIG_NUMBERS = {
+        "hundred" => 100, 
+        "thousand" => 1000, 
+        "hundred_thousand" => 100000, 
+        "million" => 1000000, 
+        "billion" => 1000000000
+    }
+
     def convert_number_to_words(number)
         words = if NUMBER_WORD_HASH[number]
             NUMBER_WORD_HASH[number]
-        elsif number < 100
+        elsif number < BIG_NUMBERS["hundred"]
             ones = number % 10
             tens = (number / 10).floor
             "#{NUMBER_WORD_HASH[tens * 10]} #{NUMBER_WORD_HASH[ones]}"
@@ -49,7 +57,7 @@ class Converter
             else
                 "#{NUMBER_WORD_HASH[hundreds]} hundred"
             end
-        elsif number < 100000
+        elsif number < BIG_NUMBERS["thousand"]
             thousands = (number / 1000).floor
             mod = number % 1000
             if mod > 0
@@ -57,7 +65,7 @@ class Converter
             else
                 "#{convert_number_to_words(thousands)} thousand"
             end
-        elsif number < 1000000000
+        elsif number < BIG_NUMBERS["million"]
             hundreds_thousands = (number / 100000).floor
             mod = number % 100000
             if mod > 0
@@ -65,9 +73,17 @@ class Converter
             else
                 "#{convert_number_to_words(hundreds_thousands)} hundred"
             end
+        elsif number < BIG_NUMBERS["billion"]
+            millions = (number / BIG_NUMBERS["million"]).floor
+            mod = number % BIG_NUMBERS["million"]
+            if mod > 0
+                "#{convert_number_to_words(millions)} million and #{convert_number_to_words(mod)}"
+            else
+                "#{convert_number_to_words(millions)} million"
+            end
         end
     end
 end
 
 converter = Converter.new
-puts converter.convert_number_to_words(990000)
+puts converter.convert_number_to_words(900000000)
