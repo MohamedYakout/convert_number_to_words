@@ -27,10 +27,7 @@ class Converter
         60=>"sixty",
         70=>"seventy",
         80=>"eighty",
-        90=>"ninety"
-    }
-
-    BIG_NUMBERS = {
+        90=>"ninety", 
         100=>"hundred",
         1000 =>"thousand",
         1000000=>"million",
@@ -44,9 +41,17 @@ class Converter
             ones = number % 10
             tens = (number / 10).floor
             "#{NUMBER_WORD_HASH[tens * 10]} #{NUMBER_WORD_HASH[ones]}"
+        elsif number < 1000
+            hundreds = (number / 100).floor
+            mod = number % 100
+            if mod > 0
+                "#{NUMBER_WORD_HASH[hundreds]} hundred and #{convert_number_to_words(mod)}"
+            else
+                "#{NUMBER_WORD_HASH[hundreds]} hundred"
+            end
         end
     end
 end
 
 converter = Converter.new
-puts converter.convert_number_to_words(99)
+puts converter.convert_number_to_words(251)
