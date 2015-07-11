@@ -57,9 +57,17 @@ class Converter
             else
                 "#{convert_number_to_words(thousands)} thousand"
             end
+        elsif number < 1000000000
+            hundreds_thousands = (number / 100000).floor
+            mod = number % 100000
+            if mod > 0
+                "#{convert_number_to_words(hundreds_thousands)} hundred and #{convert_number_to_words(mod)}"
+            else
+                "#{convert_number_to_words(hundreds_thousands)} hundred"
+            end
         end
     end
 end
 
 converter = Converter.new
-puts converter.convert_number_to_words(1110)
+puts converter.convert_number_to_words(990000)
