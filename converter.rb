@@ -46,10 +46,12 @@ class Converter
     def convert_number_to_words(number)
         words = if NUMBER_WORD_HASH[number]
             NUMBER_WORD_HASH[number]
+        # < 100
         elsif number < BIG_NUMBERS["hundred"]
             ones = number % 10
             tens = (number / 10).floor
             "#{NUMBER_WORD_HASH[tens * 10]} #{NUMBER_WORD_HASH[ones]}"
+        # < 1000
         elsif number < BIG_NUMBERS["thousand"]
             hundreds = (number / 100).floor
             mod = number % 100
@@ -58,21 +60,13 @@ class Converter
             else
                 "#{NUMBER_WORD_HASH[hundreds]} hundred"
             end
-        elsif number < BIG_NUMBERS["hundred_thousand"]
+        elsif number < BIG_NUMBERS["million"]
             thousands = (number / 1000).floor
             mod = number % 1000
             if mod > 0
                 "#{convert_number_to_words(thousands)} thousand and #{convert_number_to_words(mod)}"
             else
                 "#{convert_number_to_words(thousands)} thousand"
-            end
-        elsif number < BIG_NUMBERS["million"]
-            hundreds_thousands = (number / 100000).floor
-            mod = number % 100000
-            if mod > 0
-                "#{convert_number_to_words(hundreds_thousands)} hundred and #{convert_number_to_words(mod)}"
-            else
-                "#{convert_number_to_words(hundreds_thousands)} hundred"
             end
         elsif number < BIG_NUMBERS["billion"]
             millions = (number / BIG_NUMBERS["million"]).floor
